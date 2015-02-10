@@ -21,6 +21,7 @@
     	if(typeof Constructor !== 'function'){
     		throw name + " is not a valid Constructor";
     	}
+
     	if(args.constructor !== Array){
     		var args = Array.prototype.slice.call(arguments);
     		args.shift();
@@ -36,16 +37,24 @@
     	//return new Constructor(args[0]);
     };
 
-    O.prototype.register = function(name, Constructor){
-        this.set(name, this.createClass(Constructor, Constructor.prototype, Constructor.prototype.classes));
+    O.prototype.register = function(name, Constructor, prototype, classes){
+    	if(prototype === undefined && Constructor.prototype){
+    		prototype = Constructor.prototype;
+    	}
+
+    	if(classes === undefined && prototype.classes){
+    		classes = prototype.classes;
+    	}
+
+        this.set(name, this.createClass(Constructor, prototype, classes));
     };
 
-	O.prototype.createClass = function(Constructor, prototype, mixins){
-		if(typeof mixins === 'function' || typeof mixins === 'string'){
-			mixins = [mixins];
+	O.prototype.createClass = function(Constructor, prototype, classes){
+		if(typeof classes === 'function' || typeof classes === 'string'){
+			classes = [classes];
 		}
-		else if(mixins === undefined){
-			mixins = [];
+		else if(classes === undefined){
+			classes = [];
 		}
 
 		if(prototype === undefined){
@@ -56,12 +65,12 @@
 			Constructor = function(){};
 		}
 
-		//console.log("CreateClass", mixins, typeof mixins);
+		//console.log("CreateClass", classes, typeof classes);
 
 		var VanillaConstructor = function(){
 			var args = arguments;
 			//console.log("VanillaConstructor.construct", args);
-			mixins.forEach(function(Parent){
+			classes.forEach(function(Parent){
 				if(typeof Parent === "string"){
 					Parent = O.get(Parent);
 				}
@@ -75,8 +84,8 @@
 		var parent_prototype = {};
 
 		prototype.constructor = Constructor;
-		if(mixins.length > 0){
-			var Parent = mixins[0];
+		if(classes.length > 0){
+			var Parent = classes[0];
 
 			//console.log("parent", Parent, Constructor);
 			if(typeof Parent === "string"){
