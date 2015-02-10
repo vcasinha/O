@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <script src="../O.js"></script>
+        <script src="O.events.js"></script>
+        <script>
+            window.onload = function(){
+                console.log("Ready to start");
+
+                var Obj = function(name){
+                    this.set('name', name);
+                };
+
+                Obj.prototype.constructor = Obj;
+                Obj.prototype.classes = ['o', 'o.events'];
+                Obj.prototype.name = '';
+                Obj.prototype.talk = function(){
+                    console.log("Hi! My name is " + this.get('name') + "!");
+                };
+
+                O.register("test", Obj);
+
+                var c = O.instance('test', 'miro');
+                //c.talk()
+
+                c.on('beep', function(){
+                    console.log("Beep");
+                })
+
+                //c.trigger('beep');
+
+                var d = O.instance('test', 'miro2');
+                console.log("compare", d.dump(), c.dump());
+                //O.clone(c, d);
+                d.fill(c);
+                //d.talk();
+                
+                //.resetSubscriptions();
+                d.trigger('beep');
+                
+            };
+        </script>
+    </body>
+</html>
