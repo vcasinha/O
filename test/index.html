@@ -23,19 +23,19 @@
                 O.register("test", Obj);
 
                 var c = O.instance('test', 'miro');
-                //c.talk()
+                c.talk()
 
                 c.on('beep', function(){
                     console.log("Beep");
                 })
 
-                //c.trigger('beep');
+                c.trigger('beep');
 
                 var d = O.instance('test', 'miro2');
                 console.log("compare", d.dump(), c.dump());
                 //O.clone(c, d);
                 d.fill(c);
-                //d.talk();
+                d.talk();
                 
                 //.resetSubscriptions();
                 d.trigger('beep');

@@ -13,11 +13,18 @@
         });
     };
 
+    O.prototype.unique = function(a){
+        return a.reduce(function(p, c) {
+            if (p.indexOf(c) < 0) p.push(c);
+            return p;
+        }, []);
+    };
+
     O.prototype.ready = function(callback){
         this.__onloadCallbacks.push(callback);
     };
 
-    O.prototype.instance = function(name, args){
+    O.prototype.instance = O.i = function(name, args){
         var Constructor = this.get(name);
         if(typeof Constructor !== 'function'){
             throw "(O.instance) " + name + " is not loaded";
@@ -63,6 +70,7 @@
 
             //console.log(Constructor.prototype.__name__ + '.Construct', this.__classes__);
             //console.log("VanillaConstructor.construct", args);
+            O.unique(classes);
             classes.forEach(function(parent_name){
                 var Parent;
                 if(typeof Parent === "function"){
@@ -95,10 +103,10 @@
             }
             
             //console.log("parent", Parent, Constructor);
-            parent_prototype = Object.create(Parent.prototype);
+            O.extend(Constructor.prototype, Object.create(Parent.prototype));
         }
         //console.log("O.createClass", Constructor.__name__);
-        Constructor.prototype = this.extend({}, parent_prototype, VanillaConstructor.prototype);
+        Constructor.prototype = this.extend(Constructor.prototype, VanillaConstructor.prototype);
 
         //Register within O
         this.set(name, Constructor);
