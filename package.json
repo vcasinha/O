@@ -1,0 +1,26 @@
+{
+	"name": "O",
+	"version": "0.0.1",
+	"description": "Organic Objects",
+	"main": "src/O.js",
+	"scripts": {
+		"test": "test"
+	},
+	"author": {
+		"name" : "Vladimiro Casinha",
+		"email" : "vcasinha@gmail.com",
+		"url" : "http://miro.oorganica.com/"
+	},
+	"license": "",
+	"dependencies": {
+		"grunt": "~0.4.5"
+	},
+	"devDependencies": {
+		"grunt-contrib-concat": "^0.4.0",
+		"grunt-contrib-jshint": "^0.10.0",
+		"grunt-contrib-nodeunit": "~0.3.3",
+		"grunt-contrib-qunit": "^0.5.1",
+		"grunt-contrib-uglify": "~0.4.0",
+		"grunt-contrib-watch": "^0.6.1"
+	}
+}
