@@ -3,6 +3,11 @@
 	"version": "0.0.1",
 	"description": "Organic Objects",
 	"main": "src/O.js",
+	"repository" :
+	{
+		"type" : "git",
+	 	"url" : "https://github.com/vcasinha/O.git"
+	},
 	"scripts": {
 		"test": "test"
 	},
